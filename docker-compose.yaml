@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  postgresql:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      # AMQP protocol port
+      - "5672:5672"
+      # HTTP management UI
+      - "15672:15672"
+
+  transaction:
+    build:
+      context: ./transaction_service
+      args:
+        - NODE_ENV=development
+      target: dev
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./transaction:/app/
+    environment:
+      - SERVICE=transaction
+    env_file:
+      - .env
+    depends_on:
+      - postgresql
+      - rabbitmq
+
+volumes:
+  data:
