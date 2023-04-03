@@ -13,3 +13,14 @@ async function transaction_table(client) {
 }
 
 export default transaction_table;
+
+// APP_PORT = 3000
+
+// DB_NAME = 'postgresql'
+// DB_USER = 'postgresql'
+// DB_PASSWORD = ''
+// DB_HOST = 'localhost'
+// DB_PORT = 5432
+// DB_SSL = true
+
+// QUEUE_URI = 'amqp://guest:guest@localhost:5672'
