@@ -19,7 +19,8 @@ services:
 
   transaction:
     build:
-      context: ./transaction_service
+      context: 
+        ../transaction_service
       args:
         - NODE_ENV=development
       target: dev
