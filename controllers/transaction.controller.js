@@ -1,11 +1,10 @@
 import axios from 'axios';
 import constant from '../use_case/constant';
-import queue_consumer from '../data_access/connect_queue.js';
 
-async function get_transactions(req, res) {
+async function get_transactions(walletAddress, currencyType) {
     const request = req.body;
     try {
-        const apiUrl = `${constant.api_url}/${request.currencyType}/${request.walletAddress}`;
+        const apiUrl = `${constant.api_url}/${currencyType}/${walletAddress}`;
 
         const response = await axios.get(apiUrl);
 

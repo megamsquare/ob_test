@@ -1,5 +1,6 @@
 import amqp from 'amqplib';
 import constant from '../use_case/constant.js';
+import transaction_controller from '../controllers/transaction.controller.js';
 
 let channel;
 
@@ -19,6 +20,17 @@ async function consume_transaction() {
     let update;
     await channel.consume(constant.queueName, data => {
         update = JSON.parse(data.content);
+        if (data) {
+            transaction_controller.get_transactions(update.walletAddress, update.currencyType)
+                .then((res) => {
+                    console.log(res); // a logger will be need here
+
+                    channel.ack(data);
+                })
+                .catch((error) => {
+                    console.log(error); // a logger will be needed here
+                });
+        }
     })
     return update;
 }
